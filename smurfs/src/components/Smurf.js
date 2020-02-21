@@ -1,13 +1,27 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const Smurf = ({smurf}) => {
+import { deleteSmurf, getSmurfs } from '../actions';
+
+
+const Smurf = props => {
+
+  const eradicate = e => {
+    e.preventDefault();
+    props.deleteSmurf(props.smurf.id);
+    setTimeout(() => {
+      props.getSmurfs();
+    }, 100); 
+  };
+
   return (
     <div className='smurf'>
-      <h2>{smurf.name}</h2>
-      <h4>{smurf.age}</h4>
-      <h4>{smurf.height}</h4>
+      <h2>{props.smurf.name}</h2>
+      <h4>{props.smurf.age}</h4>
+      <h4>{props.smurf.height}</h4>
+      <button onClick={eradicate}>Delete Smurf</button>
     </div>
   )
 }
 
-export default Smurf;
+export default connect(null, { getSmurfs, deleteSmurf })(Smurf);

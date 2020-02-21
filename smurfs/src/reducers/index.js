@@ -5,6 +5,8 @@ import {
   PUSH_SMURFS_START,
   PUSH_SMURFS_SUCCESS,
   PUSH_SMURFS_FAILURE,
+  DELETE_SMURF_SUCCESS,
+  DELETE_SMURF_FAILURE,
 } from '../actions';
 /*
   Be sure to import in all of the action types from `../actions`
@@ -59,6 +61,18 @@ const reducer = (state = initialState, action) => {
         return {
           ...state,
           addingSmurf: false,
+          error: action.payload,
+        }
+      case DELETE_SMURF_SUCCESS:
+        return {
+          ...state,
+          deletingSmurf: true,
+          smurfs: [...state.smurfs, action.payload],
+        }
+      case DELETE_SMURF_FAILURE:
+        return {
+          ...state,
+          deletingSmurf: false,
           error: action.payload,
         }
     default:

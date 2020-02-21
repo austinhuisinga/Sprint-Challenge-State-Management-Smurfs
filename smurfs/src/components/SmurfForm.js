@@ -21,7 +21,7 @@ const SmurfForm = props => {
     props.addSmurf(data); 
     setTimeout(() => {
       props.getSmurfs();
-    }, 1000); 
+    }, 100); 
   };
 
   return (
