@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { connect } from 'react-redux';
-import { addSmurf, getSmurfs } from '../actions';
+import { addSmurf, getSmurfs, updateSmurf } from '../actions';
 
 const SmurfForm = props => {
   const { handleSubmit, register, errors } = useForm({});
@@ -17,12 +17,27 @@ const SmurfForm = props => {
 
   // Add a new smurf. When added, render updated list of smurfs.
   const onSubmit = data => {
-    console.log(data);
+    console.log(data, 'datadata');
     props.addSmurf(data); 
     setTimeout(() => {
       props.getSmurfs();
     }, 100); 
   };
+
+  // const onSubmit = data => {
+  //   console.log(data, 'datadata');
+  //   if(!props.updatingSmurf) {
+  //     props.addSmurf(data); 
+  //     setTimeout(() => {
+  //       props.getSmurfs();
+  //     }, 100); 
+  //   } else {
+  //     props.updateSmurf(data);
+  //     setTimeout(() => {
+  //       props.getSmurfs();
+  //     }, 100); 
+  //   };
+  // };
 
   return (
     <div>
@@ -63,7 +78,10 @@ const SmurfForm = props => {
 }
 
 const mapStateToProps = state => {
-  return state;
+  return {
+    state: state,
+    upatingSmurf: state.updatingSmurf,
+  }
 }
 
-export default connect(mapStateToProps, { addSmurf, getSmurfs })(SmurfForm);
+export default connect(mapStateToProps, { addSmurf, getSmurfs, updateSmurf })(SmurfForm);
