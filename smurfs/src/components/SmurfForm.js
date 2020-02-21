@@ -1,25 +1,28 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import { addSmurf } from '../actions';
-import { useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
+import { addSmurf, getSmurfs } from '../actions';
 
-const SmurfForm = (props) => {
+const SmurfForm = props => {
   const { handleSubmit, register, errors } = useForm({});
-  const [smurf, setSmurf] = useState({
-    name: '',
-    age: '',
-    height: '',
-  });
-  const dispatch = useDispatch();
-  
 
-  const onSubmit = smurf => {
-    console.log('pre-dispatch', smurf);
-    dispatch(addSmurf(smurf)).then(res => {
-      console.log('smurf form dispatch', res);
-      // props.history.push('/');
-    })
-  }
+  // const onSubmit = smurf => {
+  //   console.log('pre-dispatch', smurf);
+  //   dispatch(addSmurf(smurf)).then(res => {
+  //     console.log('smurf form dispatch', res);
+  //     // props.history.push('/');
+  //   })
+  // }
+
+
+  // Add a new smurf. When added, render updated list of smurfs.
+  const onSubmit = data => {
+    console.log(data);
+    props.addSmurf(data); 
+    setTimeout(() => {
+      props.getSmurfs();
+    }, 1000); 
+  };
 
   return (
     <div>
@@ -59,4 +62,8 @@ const SmurfForm = (props) => {
   )
 }
 
-export default SmurfForm;
+const mapStateToProps = state => {
+  return state;
+}
+
+export default connect(mapStateToProps, { addSmurf, getSmurfs })(SmurfForm);

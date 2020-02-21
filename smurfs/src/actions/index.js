@@ -42,10 +42,14 @@ export const addSmurf = smurf => dispatch => {
   console.log(`Posting ${smurf}`);
   dispatch({ type: PUSH_SMURFS_START });
   axios
-    .post('http://localhost:3333/smurfs', smurf)
+    .post('http://localhost:3333/smurfs', {
+      name: smurf.name,
+      age: Number(smurf.age),
+      height: smurf.height,
+    })
     .then(res => {
       console.log(res.data, '.then api return');
-      dispatch({ type: PUSH_SMURFS_SUCCESS, payload: smurf })
+      dispatch({ type: PUSH_SMURFS_SUCCESS, payload: res.data })
     })
     .catch(err => {
       dispatch({ type: PUSH_SMURFS_FAILURE, payload: err.message })
